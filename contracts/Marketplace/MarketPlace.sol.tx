@@ -3,8 +3,8 @@ pragma solidity ^0.8.17;
 
 //Imports
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-// import {IMyCoin} from "../ERC20/IMyCoin.sol";
-import {IMyNFTCollection} from "../NFTSaki/INFT-Saki.sol";
+//import {IMyCoin} from "../ERC20/IMyCoin.sol";
+//import {IMyNFTCollection} from "../ERC721/IMyNFTCollection.sol";
 
 /**
  * @title Mercado para el intercambio de tokens
@@ -26,7 +26,7 @@ contract MyMarketPlace is Ownable{
      */
 
     //Referencia al contrato MyCoin
-    //IMyCoin MyCoinContract;
+    IMyCoin MyCoinContract;
     //Referencia al contrato MyNFTCollection
     IMyNFTCollection MyNFTCollectionContract;
 
@@ -75,7 +75,7 @@ contract MyMarketPlace is Ownable{
      * @param _ERC721Address address del contrato ERC721
      */
     constructor(address _ERC20Address, address _ERC721Address){
-        //MyCoinContract = IMyCoin(_ERC20Address);
+        MyCoinContract = IMyCoin(_ERC20Address);
         MyNFTCollectionContract = IMyNFTCollection(_ERC721Address);
     }
 
@@ -171,7 +171,7 @@ contract MyMarketPlace is Ownable{
         //Comprueba que la venta esta en estado abierto para que se pueda realizar la compra
         require(buysale.status == SaleStatus.Open, "The purchase is not in open status");
         //Comprueba que el comprador tiene suficiente MyCoin para realizar la compra
-        //require(MyCoinContract.getBalance(msg.sender) >= buysale.price, "you do not have enough Mycoin to make the purchase");
+        require(MyCoinContract.getBalance(msg.sender) >= buysale.price, "you do not have enough Mycoin to make the purchase");
         //Transfiere los MyCoin desde el comprador al vendedor
         MyCoinContract.transferFrom(msg.sender, address(this), buysale.price);
         // Transfiere el token ERC721 desde MyMarketPlace al comprador
