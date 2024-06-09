@@ -1,30 +1,20 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config(
+  {path:".env"}
+);
 
-// Ensure your configuration variables are set before executing the script
-const { vars } = require("hardhat/config");
+const ALCHEMY_HTTP_KEY = process.env.ALCHEMY_HTTP_KEY
+const DEPLOYER_PRIVATE_KEY = process.env.DEPLOYER_PRIVATE_KEY
 
-// Go to https://alchemy.com, sign up, create a new App in
-// its dashboard, and add its key to the configuration variables
-const ALCHEMY_API_KEY = vars.get("ALCHEMY_API_KEY");
+// const { ALCHEMY_HTTP_KEY, DEPLOYER_PRIVATE_KEY } = process.env;
 
-// Add your Sepolia account private key to the configuration variables
-// To export your private key from Coinbase Wallet, go to
-// Settings > Developer Settings > Show private key
-// To export your private key from Metamask, open Metamask and
-// go to Account Details > Export Private Key
-// Beware: NEVER put real Ether into testing accounts
-const SEPOLIA_PRIVATE_KEY = vars.get("SEPOLIA_PRIVATE_KEY");
-
+/** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: "0.8.24",
-  networks: {
-    sepolia: {
-      url: `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
-      accounts: [SEPOLIA_PRIVATE_KEY]
-    },
-    mumbai: {
-      url: process.env.MUMBAI_RPC,
-      accounts: [process.env.PRIVATE_KEY],
-    },
+  networks:{
+    mumbai:{
+      url:ALCHEMY_HTTP_KEY,
+      accounts: [DEPLOYER_PRIVATE_KEY]
+    }
   }
 };

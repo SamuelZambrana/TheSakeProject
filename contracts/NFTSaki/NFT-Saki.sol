@@ -12,7 +12,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
  * @notice 
  * @dev 
  */
-abstract contract NFTSaki is ERC721, Ownable {
+contract NFTSaki is ERC721, Ownable {
 
     /**
      * -----------------------------------------------------------------------------------------------------
