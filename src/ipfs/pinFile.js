@@ -13,12 +13,14 @@ async function pinFileToIpfs(filePath) {
 
 // In main we pass the path to the function "pinFileToIpfs()"
 async function main() {
-  const filePath = "images/kittyCat.jpg";
-  /*const filePath2 = "qwedwdw.jpg";
-  const filePath3 = "qwedwdw.jpg";*/
 
-  const uri = await pinFileToIpfs(filePath);
+  const kittyCat = "images/kittyCat.jpg";
+  const bcnCat = "images/bcnCat.jpg";
+
+  const uri = await pinFileToIpfs(kittyCat);
   console.log("IPFS URI:", uri);
+  const uri2 = await pinFileToIpfs(bcnCat);
+  console.log("IPFS URI:", uri2)
 }
 
 main();

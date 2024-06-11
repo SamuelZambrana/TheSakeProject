@@ -18,8 +18,8 @@ async function pinNftMetadataToIpfs(mediaPath, metadata) {
 async function main() {
   const mediaPath = "images/kittyCat.jpg";
   const metadata = {
-    name: "Tales From The Alchemist NFT",
-    description: "NFT minted on testnet",
+    name: "Sleepy Cat",
+    description: "NFT minted for The Saki Project",
     attributes: [
       {
         trait_type: "Rarity",
@@ -29,6 +29,20 @@ async function main() {
   };
   const uri = await pinNftMetadataToIpfs(mediaPath, metadata);
   console.log("NFT metadata pinned at:", uri);
+
+  const mediaPath2 = "images/bcnCat.jpg";
+  const metadata2 = {
+    name: "BCN Cat",
+    description: "NFT minted for The Saki Project",
+    attributes: [
+      {
+        trait_type: "Rarity",
+        value: "Rarest",
+      },
+    ],
+  };
+  const uri2 = await pinNftMetadataToIpfs(mediaPath2, metadata2);
+  console.log("NFT metadata pinned at:", uri2);
 }
 
 main();

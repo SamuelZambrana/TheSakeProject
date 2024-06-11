@@ -7,9 +7,7 @@ const { NFTStorage } = require("nft.storage");
 const IPFS_PREFIX = "ipfs://";
 
 const pinata = new Pinata({ pinataJWTKey: process.env.PINATA_JWT_KEY });
-const nftStorage = new NFTStorage({
-  token: process.env.NFT_STORAGE_TOKEN || "",
-});
+const nftStorage = new NFTStorage({ token: process.env.NFT_STORAGE_TOKEN || "", });
 
 const clientParams = {
   chain: polygonMumbai,
