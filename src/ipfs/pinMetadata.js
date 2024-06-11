@@ -1,5 +1,5 @@
 const { IPFS_PREFIX, pinata } = require("../configuration/config");
-const { pinFileToIpfs } = require("../configuration/ipfs");
+const { pinFileToIpfs } = require("../ipfs/pinFile");
 
 //function to pin metadata that we describe in main()
 async function pinJsonToIpfs(metadata) {
@@ -8,15 +8,24 @@ async function pinJsonToIpfs(metadata) {
   return IPFS_PREFIX + result.IpfsHash
 }
 
-async function pinNftMetadataToIpfs(mediaPath, metadata) {
-  const mediaUri = await pinFileToIpfs(mediaPath);
-  const updatedMetadata = { ...metadata, image: mediaUri };
-  const metadataUri = await pinJsonToIpfs(updatedMetadata)
-  return  metadataUri
+//Funcio del gepeto per asociar image to metadata
+async function pinMetadataWithImageUri(imageUri, metadata) {
+  const updatedMetadata = { ...metadata, image: imageUri };
+  const options = { pinataMetadata: { name: 'metadata.json' } };
+
+  try {
+    const result = await pinata.pinJSONToIPFS(updatedMetadata, options);
+    return IPFS_PREFIX + result.IpfsHash;
+  } catch (error) {
+    console.error('Error pinning metadata to IPFS:', error);
+    throw error;
+  }
 }
 
+module.exports = { pinMetadataWithImageUri };
+
 async function main() {
-  const mediaPath = "images/kittyCat.jpg";
+  const mediaPath = "ipfs://QmXVoFLmJTkFJz9qVsTRdJJpZxoL6JNMwc74NVw3mXDF52";   //uri of the picture
   const metadata = {
     name: "Sleepy Cat",
     description: "NFT minted for The Saki Project",
@@ -27,10 +36,10 @@ async function main() {
       },
     ],
   };
-  const uri = await pinNftMetadataToIpfs(mediaPath, metadata);
+  const uri = await pinMetadataWithImageUri(mediaPath, metadata);
   console.log("NFT metadata pinned at:", uri);
 
-  const mediaPath2 = "images/bcnCat.jpg";
+  const mediaPath2 = "ipfs://QmRYdk9q6SHncsvZZU9C5dQCm3AMnnaReeopbzbYyGzvNe";  //uri of the picture
   const metadata2 = {
     name: "BCN Cat",
     description: "NFT minted for The Saki Project",
@@ -41,7 +50,7 @@ async function main() {
       },
     ],
   };
-  const uri2 = await pinNftMetadataToIpfs(mediaPath2, metadata2);
+  const uri2 = await pinMetadataWithImageUri(mediaPath2, metadata2);
   console.log("NFT metadata pinned at:", uri2);
 }
 
