@@ -1,12 +1,12 @@
 const { IPFS_PREFIX, pinata } = require("../configuration/config");
-const { pinFileToIpfs } = require("../ipfs/pinFile");
+//const { pinFileToIpfs } = require("../ipfs/pinFile");
 
 //function to pin metadata that we describe in main()
-async function pinJsonToIpfs(metadata) {
+/*async function pinJsonToIpfs(metadata) {
   const options = { pinataMetadata: { name: "metadata.json" } }; 
   const result = await pinata.pinJSONToIPFS(metadata, options);
   return IPFS_PREFIX + result.IpfsHash
-}
+}*/
 
 //Funcio del gepeto per asociar image to metadata
 async function pinMetadataWithImageUri(imageUri, metadata) {
