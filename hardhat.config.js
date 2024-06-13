@@ -1,10 +1,10 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config();
 
 const { vars } = require("hardhat/config");  
 
-const INFURA_API_KEY = vars.get("INFURA_API_KEY");   //or process.env.KEY??
-
-const PRIVATE_KEY = vars.get("PRIVATE_KEY");    
+const INFURA_API_KEY = process.env.INFURA_API_KEY;
+const PRIVATE_KEY = process.env.PRIVATE_KEY; 
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -18,7 +18,11 @@ module.exports = {
   //should we do that on mumbay???
   networks: {
     sepolia: {
-      url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`, //mumbay??
+      url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`, //sepolia
+      accounts: [PRIVATE_KEY],
+    },
+    mumbai: {
+      url: `https://polygon-mumbai.infura.io/v3/${INFURA_API_KEY}`,  //mumbay
       accounts: [PRIVATE_KEY],
     },
   }
