@@ -17,12 +17,12 @@ module.exports = {
   },
   //should we do that on mumbay???
   networks: {
-    sepolia: {
+    /*sepolia: {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`, //sepolia
       accounts: [PRIVATE_KEY],
-    },
-    mumbai: {
-      url: `https://polygon-mumbai.infura.io/v3/${INFURA_API_KEY}`,  //mumbay
+    },*/
+    amoy: {
+      url: `https://polygon-amoy.infura.io/v3/${INFURA_API_KEY}`,  //mumbay(amoy)
       accounts: [PRIVATE_KEY],
     },
   }
