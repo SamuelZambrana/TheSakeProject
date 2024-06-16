@@ -1,5 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox");
-require("dotenv").config();
+require("@nomicfoundation/hardhat-ignition");
+require("@nomiclabs/hardhat-ethers");
+require("dotenv").config({path:".env"});
 
 const { vars } = require("hardhat/config");  
 
@@ -17,14 +19,14 @@ module.exports = {
   },
   //should we do that on mumbay???
   networks: {
-    /*sepolia: {
+    sepolia: {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`, //sepolia
       accounts: [PRIVATE_KEY],
-    },*/
+    },/*
     amoy: {
       url: `https://polygon-amoy.infura.io/v3/${INFURA_API_KEY}`,  //mumbay(amoy)
       accounts: [PRIVATE_KEY],
-    },
+    },*/
   }
 };
 

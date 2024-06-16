@@ -1,4 +1,4 @@
-require("dotenv").config();
+/*require("dotenv").config({path:".env"});
 
 const Pinata = require("@pinata/sdk");
 const { http, createPublicClient, createWalletClient } = require("viem");
@@ -30,5 +30,5 @@ module.exports = {
   publicClient,
   walletClient,
   account,
-};
+};*/
 
