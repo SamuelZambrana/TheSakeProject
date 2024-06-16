@@ -1,6 +1,6 @@
 
 //const ERC20DeployScript = require("./ERC20.deploy")
-const ERC721DeployScript = require("./NFTSaki.deploy")
+const ERC721DeployScript = require("./MyNFTModule")
 const MarketPlaceDeployScript = require("./MarketPlace.deploy")
 
 const main = async () => {

@@ -1,7 +1,7 @@
 const hre = require("hardhat");
 
 //const ERC20DeployScript = require("./ERC20.deploy")
-const ERC721DeployScript = require("./NFTSaki.deploy")
+const ERC721DeployScript = require("./MyNFTModule")
 
 let deployedMarketPlaceContract
 let contractAddress

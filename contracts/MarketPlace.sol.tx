@@ -26,7 +26,7 @@ contract MyMarketPlace is Ownable{
      */
 
     //Referencia al contrato MyCoin
-    IMyCoin MyCoinContract;
+    //IMyCoin MyCoinContract;
     //Referencia al contrato MyNFTCollection
     IMyNFTCollection MyNFTCollectionContract;
 
