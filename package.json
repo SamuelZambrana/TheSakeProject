@@ -1,4 +1,7 @@
 {
+  "name": "your-project-name",
+  "version": "1.0.0",
+  "type": "module",
   "devDependencies": {
     "@nomicfoundation/hardhat-ethers": "^3.0.6",
     "@nomicfoundation/hardhat-ignition": "^0.15.4",
@@ -13,6 +16,7 @@
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.2",
     "@pinata/sdk": "^2.1.0",
+    "chai": "^5.1.1",
     "dotenv": "^16.4.1",
     "nft.storage": "^7.1.1",
     "viem": "^2.13.8"

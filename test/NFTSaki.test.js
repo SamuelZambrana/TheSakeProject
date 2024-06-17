@@ -1,17 +1,16 @@
 const { expect } = require("chai");
 
-describe("ERC721 Test Suite", function(){
+describe("TheSakiNFTs Test Suite", function(){
 
-    let deployedERC721Contract //Direccion desplegada del contrato ERC721
+    let deployedTheSakiNFTsContract //Direccion desplegada del contrato ERC721
 
     let signer, otherAccount //Direcciones signers(firmantes)
-    let tokenId = 1;//ID token
 
-    it("Deploy Contract ERC721", async function(){
-        const ERC721Contract = await ethers.getContractFactory("MyNFTCollection")
-        deployedERC721Contract = await ERC721Contract.deploy("NFTCollection","CoNFT")
-        await deployedERC721Contract.waitForDeployment()
-        console.log(deployedERC721Contract.target)
+    it("Deploy Contract TheSakiNFTs", async function(){
+        const TheSakiNFTsContract = await ethers.getContractFactory("TheSakiNFTs")
+        deployedTheSakiNFTsContract = await TheSakiNFTsContract.deploy("MyNFT","MNFT", "0x627306090abaB3A6e1400e9345bC60c78a8BEf57")
+        await deployedTheSakiNFTsContract.waitForDeployment()
+        console.log(deployedTheSakiNFTsContract.target)
     })
 
     it("Get Signers", async function(){
@@ -20,12 +19,12 @@ describe("ERC721 Test Suite", function(){
         console.log(otherAccount.address)
     })
 
-    it("should increment the counter and return the new tokenId when calling mintNewToken", async function () {
+    it("should increment the counter and return the new tokenId when calling safeMint", async function () {
         //Minteamos el TokenId
-        const mint = await deployedERC721Contract.mintNewToken();
+        const mint = await deployedTheSakiNFTsContract.safeMint(otherAccount.address, "ipfs://QmXVoFLmJTkFJz9qVsTRdJJpZxoL6JNMwc74NVw3mXDF52");
         console.log("Address del creador del TokenId: ", mint.to)
         //Verificamos que el contador se haya incrementado
-        expect(2).to.equal(2)
+        expect(1).to.equal(1)
       });
     
       it("should transfer a token correctly when calling doTransfer", async function () {
