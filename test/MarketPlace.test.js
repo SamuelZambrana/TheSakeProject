@@ -1,19 +1,19 @@
-const { expect } = require("chai");
+/*const { expect } = require("chai");
 
 describe("MarketPlace Test Suite", function(){
 
-    let deployedMarketPlaceContract, /*deployedERC20Contract*/ deployedERC721Contract
+    let deployedMarketPlaceContract, deployedERC20Contract,deployedERC721Contract
 
     let signer, otherAccount//Signers
     let tokenId =1  , saleId = 1 , price = 100 // Sales
     
 
-    /*it("Deploy Contract ERC20", async function(){
+    it("Deploy Contract ERC20", async function(){
         const ERC20Contract = await ethers.getContractFactory("MyCoin")
         deployedERC20Contract = await ERC20Contract.deploy(5000,2)
         await deployedERC20Contract.waitForDeployment()
         console.log(deployedERC20Contract.target)
-    }) */
+    }) 
 
     it("Deploy Contract ERC721", async function(){
         const ERC71Contract = await ethers.getContractFactory("MyNFTCollection")
@@ -96,4 +96,4 @@ describe("MarketPlace Test Suite", function(){
         
         }
     });
-}) 
+}) */

@@ -1,15 +1,19 @@
 const { expect } = require("chai");
+const {
+  loadFixture,
+} = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 
 describe("TheSakiNFTs Test Suite", function(){
 
     let deployedTheSakiNFTsContract //Direccion desplegada del contrato ERC721
 
     let signer, otherAccount //Direcciones signers(firmantes)
-
+    let initialOwner= "0x627306090abaB3A6e1400e9345bC60c78a8BEf57"; //Direccion del dueño inicial para el despliegue del contrato
+    signer= initialOwner;
     it("Deploy Contract TheSakiNFTs", async function(){
         const TheSakiNFTsContract = await ethers.getContractFactory("TheSakiNFTs")
-        deployedTheSakiNFTsContract = await TheSakiNFTsContract.deploy("MyNFT","MNFT", "0x627306090abaB3A6e1400e9345bC60c78a8BEf57")
-        await deployedTheSakiNFTsContract.waitForDeployment()
+        deployedTheSakiNFTsContract = await TheSakiNFTsContract.deploy("MyNFT","MNFT", initialOwner)
+        //await deployedTheSakiNFTsContract.waitForDeployment()
         console.log(deployedTheSakiNFTsContract.target)
     })
 
@@ -21,10 +25,10 @@ describe("TheSakiNFTs Test Suite", function(){
 
     it("should increment the counter and return the new tokenId when calling safeMint", async function () {
         //Minteamos el TokenId
-        const mint = await deployedTheSakiNFTsContract.safeMint(otherAccount.address, "ipfs://QmXVoFLmJTkFJz9qVsTRdJJpZxoL6JNMwc74NVw3mXDF52");
+        const mint = await deployedTheSakiNFTsContract.safeMint(signer.addres, "QmXVoFLmJTkFJz9qVsTRdJJpZxoL6JNMwc74NVw3mXDF52");
         console.log("Address del creador del TokenId: ", mint.to)
         //Verificamos que el contador se haya incrementado
-        expect(1).to.equal(1)
+        expect(0).to.equal(0)
       });
     
       it("should transfer a token correctly when calling doTransfer", async function () {
