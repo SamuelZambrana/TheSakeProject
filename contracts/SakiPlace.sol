@@ -26,7 +26,7 @@ contract SakiPlace is IERC721Receiver, Ownable {
     constructor(address nftAddress) {
         theSakiNFTs = ITheSakiNFTs(nftAddress);
     }
-    
+
     function listNFT(uint256 tokenId, uint256 price) external {
         require(theSakiNFTs.ownerOf(tokenId) == msg.sender, "Only the owner can list the NFT");
         require(theSakiNFTs.isApprovedForAll(msg.sender, address(this)) || theSakiNFTs.getApproved(tokenId) == address(this), "Marketplace not approved");
