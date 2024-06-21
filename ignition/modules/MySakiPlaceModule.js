@@ -2,18 +2,16 @@ const { buildModule } = require("@nomicfoundation/hardhat-ignition/modules");
 require("dotenv").config({ path: ".env" });
 const { ethers } = require("ethers");
 
-const MyNFTModule = buildModule("MyNFTModule", (m) => {
+const MySakiPlaceModule = buildModule("MySakiPlaceModule", (m) => {
+    const contractAddress = process.env.CONTRACT_ADDRESS;
     const privateKey = process.env.PRIVATE_KEY;
     const wallet = new ethers.Wallet(privateKey);
     const ourWallet = wallet.address; // Dirección de la wallet asociada a la clave privada
 
-    const MyNFT = m.contract("TheSakiNFTs", ["MyNFT", "MNFT", ourWallet]);
+    const MySakiPlace = m.contract("SakiPlace", contractAddress);
 
-    const tokenUri = "QmV3kY4B8vTt9X4G1i3gLMwBhtZt6Csj878jEamZRXgwoi";
+    return { MySakiPlace };
 
-    m.call(MyNFT, "safeMint", [ourWallet, tokenUri]);
-
-    return { MyNFT };
 });
 
-module.exports = MyNFTModule;
+module.exports = MySakiPlaceModule;

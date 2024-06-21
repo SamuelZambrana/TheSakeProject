@@ -1,9 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox");
-require("@nomicfoundation/hardhat-ignition");
+require("@nomicfoundation/hardhat-ignition-ethers");
 require("@nomiclabs/hardhat-ethers");
-require("dotenv").config({path:".env"});
-
-const { vars } = require("hardhat/config");  
+require("dotenv").config();
 
 const ALCHEMY_HTTP_KEY = process.env.ALCHEMY_HTTP_KEY
 const DEPLOYER_PRIVATE_KEY = process.env.DEPLOYER_PRIVATE_KEY

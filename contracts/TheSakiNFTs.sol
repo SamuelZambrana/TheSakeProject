@@ -23,6 +23,12 @@ contract TheSakiNFTs is ERC721, ERC721URIStorage, Ownable {
         return tokenId;
     }
 
+    function incrementCounter() internal returns(uint256){
+        _tokenIdCounter++;
+        return _tokenIdCounter;
+    }
+
+
      function doTransfer(address _to, uint256 _tokenId) public onlyOwner {
         safeTransferFrom(msg.sender, _to, _tokenId);
     }
