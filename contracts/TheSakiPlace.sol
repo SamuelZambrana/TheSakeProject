@@ -2,11 +2,10 @@
 // Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity ^0.8.19;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "../contracts/ITheSakiNFTs.sol";
 
-abstract contract SakiPlace is Ownable {
-    
+contract TheSakiPlace {
+
     struct Listing {
         address seller;
         uint256 price;
@@ -49,7 +48,8 @@ abstract contract SakiPlace is Ownable {
 
         //swamp of nft for ethers
         theSakiNFTs.safeTransferFrom(listing.seller, msg.sender, tokenId);
-        payable(listing.seller).transfer(msg.value);
+        (bool success, ) = listing.seller.call{value: msg.value}("");
+        require(success, "Transfer failed");
 
         emit NFTPurchased(tokenId, msg.sender, listing.price);
     }
@@ -62,11 +62,4 @@ abstract contract SakiPlace is Ownable {
 
         emit ListingCanceled(tokenId);
     }
-
-
-    /*
-    // Implement IERC721Receiver to allow safeTransferFrom
-    function onERC721Received(address, address, uint256, bytes memory) public virtual returns (bytes4) {
-        return this.onERC721Received.selector;
-    }*/
 }

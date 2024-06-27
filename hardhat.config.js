@@ -1,14 +1,10 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("@nomicfoundation/hardhat-ignition");
 require("@nomiclabs/hardhat-ethers");
-require("dotenv").config({path:".env"});
+require("dotenv").config({ path: ".env" });
 
-const { vars } = require("hardhat/config");  
+const { INFURA_API_KEY, PRIVATE_KEY } = process.env;
 
-const INFURA_API_KEY = process.env.INFURA_API_KEY;
-const PRIVATE_KEY = process.env.PRIVATE_KEY; 
-
-/** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: "0.8.24",
   paths: {
@@ -17,18 +13,14 @@ module.exports = {
     cache: "./cache",
     artifacts: "./artifacts"
   },
-  //should we do that on mumbay???
   networks: {
     sepolia: {
-      url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`, //sepolia
+      url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [PRIVATE_KEY],
-    },/*
-    amoy: {
-      url: `https://polygon-amoy.infura.io/v3/${INFURA_API_KEY}`,  //mumbay(amoy)
-      accounts: [PRIVATE_KEY],
-    },*/
+    }
   }
 };
+
 
 
 

@@ -17,3 +17,5 @@ const MyNFTModule = buildModule("MyNFTModule", (m) => {
 });
 
 module.exports = MyNFTModule;
+
+//deploying the SC and calling "safeMint" to generate a NFT in our wallet

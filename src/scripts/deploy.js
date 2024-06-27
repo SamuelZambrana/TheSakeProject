@@ -1,4 +1,4 @@
-const { ethers } = require("ethers");
+/*const { ethers } = require("ethers");
 require("dotenv").config();
 
 async function main() {
@@ -26,3 +26,4 @@ main()
     });
 
     //we had some problems with ignition module, thats why we used this script
+*/
