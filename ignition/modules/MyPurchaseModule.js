@@ -3,10 +3,10 @@ require("dotenv").config({ path: ".env" });
 
 const MyPurchaseModule = buildModule("MyPurchaseModule", (m) => {
 
-    const contractAddress = process.env.NFT_CONTRACT_ADDRESS; 
-    const MyPurchase = m.contractAt("TheSakiPlace",[contractAddress]);
+    const contractAddress = process.env.SP_CONTRACT_ADDRESS; 
+    const MyPurchase = m.contractAt("TheNewSakiPlace", contractAddress);  //instance of the contract, no []
 
-    m.call(MyPurchase, "listNFT", ["0", "10000000000000"]);
+    m.call(MyPurchase, "listNFT", [0, 10000000000000]);
 
     return { MyPurchase };
 
