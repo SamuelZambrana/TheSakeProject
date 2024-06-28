@@ -1,5 +1,6 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("@nomicfoundation/hardhat-ignition-ethers");
+require("@nomicfoundation/hardhat-chai-matchers")
 require("@nomiclabs/hardhat-ethers");
 require("dotenv").config();
 

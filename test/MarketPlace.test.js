@@ -1,54 +1,52 @@
-/*const { expect } = require("chai");
+const { expect } = require("chai");
 
-describe("MarketPlace Test Suite", function(){
+let deployedSakiNFTS, deployedTheNewSakiPlace //Direccion desplegada del contrato ERC721 y del contrato del marketplace
 
-    let deployedMarketPlaceContract, deployedERC20Contract,deployedERC721Contract
+let signer, owner //Direcciones signers(firmantes)
 
-    let signer, otherAccount//Signers
-    let tokenId =1  , saleId = 1 , price = 100 // Sales
+let tokenId, precio// Creamos e inicializamos el tokenId y el precio a 0
+
+let tokenUri = "ipfs://QmV3kY4B8vTt9X4G1i3gLMwBhtZt6Csj878jEamZRXgwoi";
+
+describe("TheNewSakiPlace contract", function () {
+
+  it("Deploy Contract TheNewSakiPlace, Get Signers and balance of owner", async function () {
+    // Obtener las direcciones de los firmantes para el contrato
+    [owner, signer] = await ethers.getSigners();
+    console.log("Owner Address: ", owner.address)
+    console.log("Signer Address: ", signer.address)
     
-
-    it("Deploy Contract ERC20", async function(){
-        const ERC20Contract = await ethers.getContractFactory("MyCoin")
-        deployedERC20Contract = await ERC20Contract.deploy(5000,2)
-        await deployedERC20Contract.waitForDeployment()
-        console.log(deployedERC20Contract.target)
-    }) 
-
-    it("Deploy Contract ERC721", async function(){
-        const ERC71Contract = await ethers.getContractFactory("MyNFTCollection")
-        deployedERC721Contract = await ERC71Contract.deploy("NFTCollection","CoNFT")
-        await deployedERC721Contract.waitForDeployment()
-        console.log(deployedERC721Contract.target)
-    })
+    //Creamos la instancia del contrato y lo desplegamos pasandole los parametros al constructor
+    //Despliegue contrato TheSakiNfts
+    deployedSakiNFTS = await ethers.deployContract("TheSakiNFTs", ["MyNFT","MNFT", owner.address]);
+    await deployedSakiNFTS.deployed();
+    console.log("Contract Address TheSakiNFTs: ", deployedSakiNFTS.address);
     
+     //Despliegue contrato TheNewSakiPLace
+     deployedTheNewSakiPlace = await ethers.deployContract("TheNewSakiPlace", [deployedSakiNFTS.address]);
+     await deployedTheNewSakiPlace.deployed();
+     console.log("Contract Address TheNewSakiPlace: ", deployedTheNewSakiPlace.address);
+     
+    //Obtenemos el balance total de la direccion del owner, que es el que despliega el contrato
+    //Balance owner contrato TheSakiNfts
+    const ownerBalance = await deployedSakiNFTS.balanceOf(owner.address);
+    expect(0).to.equal(ownerBalance);
+    console.log("Balance of owner contrato TheSakiNfts: ", ownerBalance)  
+  });
 
-    it("Deploy Contract MarketPlace", async function(){
-        const marketPlaceContract = await ethers.getContractFactory("MyMarketPlace")
-        deployedMarketPlaceContract = await marketPlaceContract.deploy(deployedERC721Contract.target)
-        await deployedMarketPlaceContract.waitForDeployment()
-        console.log(deployedMarketPlaceContract.target)
-        //Llama al método "approve" en el contrato desplegado para autorizar la direccion
-        //del contrato de marketplace que pueda hacer transferencias de tokenERC20
-        const appoveERC20 = await deployedERC20Contract.approve(deployedMarketPlaceContract.target, 5000);
-        console.log("Aprobacion para transferir MyCoin's al address: ", appoveERC20.to)
-        const mintERC721 = await deployedERC721Contract.mintNewToken();
-        console.log("Address del creador del TokenId: ", mintERC721.to)
-        //Llama al método "approve" en el contrato desplegado para autorizar la direccion
-        //del contrato de marketplace que pueda hacer transferencias de tokenERC721
-        const approveERC721 = await deployedERC721Contract.approve(deployedMarketPlaceContract.target, tokenId);
-        //Verifica que la aprobación se haya realizado correctamente
-        console.log("Aprobacion para transferir MyNFTCollection's al address: ", approveERC721.to)//Verifica que la aprobación se haya realizado correctamente
-    });
+  it("should allow listing an NFT", async function () {
+    const valueToSetTokenID = ethers.BigNumber.from(tokenId); // tokenId
+    const valueToSetprecio = ethers.BigNumber.from(precio); // precio
+    
+    const listar= await deployedTheNewSakiPlace.listNFT(valueToSetTokenID, valueToSetprecio);
 
+    /*
+    const listing = await deployedTheNewSakiPlace.listings(tokenId);
+    expect(listing.seller).to.equal(owner.address);
+    expect(listing.price).to.equal(precio); */
+  }); 
 
-    it("Get Signers", async function(){
-        [signer,otherAccount] = await ethers.getSigners()
-        console.log(signer.address) // Direccion del creador de la venta
-        console.log(otherAccount.address) // Direccion del comprador de la venta(Compra con Mycoin)
-    });
-
-    it("Should allow the owner to create a sale", async function(){
+   /* it("Should allow the owner to create a sale", async function(){
         //Comprobar el estado inicial -> llamando a la funcion createSale y creando la venta
         const createSales = await deployedMarketPlaceContract.createSale(tokenId, price)
         //Verifica que la venta se haya creado correctamente y la buscamos en el mapping
@@ -95,5 +93,5 @@ describe("MarketPlace Test Suite", function(){
             //Comprobamos si el ID del tokenID coincide con el valor esperado
         
         }
-    });
-}) */
+    }); */
+}) 

@@ -13,8 +13,10 @@ const MyMintingModule = buildModule("MyMintingModule", (m) => {
     const tokenUri = "QmdJ4MF8abq466wXCoq6Jek5LqoQLvPAhx1nbqvE3rCxfB";
 
     m.call(MyNFT, "safeMint", [ourWallet, tokenUri]);
-
+    
     return { MyNFT };
 });
 
 module.exports = MyMintingModule;
+
+//calling "safeMint" to generate a NFT in our wallet with another URI
