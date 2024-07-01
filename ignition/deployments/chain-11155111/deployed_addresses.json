@@ -1,4 +1,5 @@
 {
   "MyNewSakiPlaceModule#TheNewSakiPlace": "0x317944f299faFe35D6Bdd17295BD1F2beA3759fc",
-  "MyPurchaseModule#TheNewSakiPlace": "0x317944f299faFe35D6Bdd17295BD1F2beA3759fc"
+  "MyPurchaseModule#TheNewSakiPlace": "0x317944f299faFe35D6Bdd17295BD1F2beA3759fc",
+  "MyCancelModule#TheNewSakiPlace": "0x317944f299faFe35D6Bdd17295BD1F2beA3759fc"
 }
