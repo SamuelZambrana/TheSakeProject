@@ -1,12 +1,14 @@
 const { expect } = require("chai");
+const { ethers } = require("hardhat");
 
 let deployedSakiNFTS, deployedTheNewSakiPlace //Direccion desplegada del contrato ERC721 y del contrato del marketplace
 
 let signer, owner //Direcciones signers(firmantes)
 
-let tokenId, precio// Creamos e inicializamos el tokenId y el precio a 0
+let tokenId = 0; value = 0;// Creamos e inicializamos el tokenId y el precio a 0
 
 let tokenUri = "ipfs://QmV3kY4B8vTt9X4G1i3gLMwBhtZt6Csj878jEamZRXgwoi";
+
 
 describe("TheNewSakiPlace contract", function () {
 
@@ -34,11 +36,19 @@ describe("TheNewSakiPlace contract", function () {
     console.log("Balance of owner contrato TheSakiNfts: ", ownerBalance)  
   });
 
+  it("should increment the counter and return the new tokenId when calling safeMint", async function () {
+    //Minteamos el TokenId
+    tokenId = await deployedSakiNFTS.connect(owner).safeMint(signer.address, tokenUri);
+    await tokenId.wait();
+    console.log("Address del creador del TokenId: ", tokenId.to)
+
+    // Obtenemos el tokenId generado por la función safeMint
+    const tokenIdAfterMint = await deployedSakiNFTS.ownerOf(0);
+    console.log("Nuevo dueño del tokenId:", tokenIdAfterMint.toString());
+  });
+
   it("should allow listing an NFT", async function () {
-    const valueToSetTokenID = ethers.BigNumber.from(tokenId); // tokenId
-    const valueToSetprecio = ethers.BigNumber.from(precio); // precio
-    
-    const listar= await deployedTheNewSakiPlace.listNFT(valueToSetTokenID, valueToSetprecio);
+    const listar= await deployedTheNewSakiPlace.connect(owner).listNFT(0, 100).ethers.utils.parseEther("1.0");
 
     /*
     const listing = await deployedTheNewSakiPlace.listings(tokenId);
