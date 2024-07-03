@@ -1,4 +1,4 @@
-const { IPFS_PREFIX, pinata } = require("../configuration/config");
+const { IPFS_PREFIX, pinata } = require("./config");
 //const { pinFileToIpfs } = require("../ipfs/pinFile");
 
 //function to pin metadata that we describe in main()
@@ -25,7 +25,7 @@ async function pinMetadataWithImageUri(imageUri, metadata) {
 module.exports = { pinMetadataWithImageUri };
 
 async function main() {
-  const mediaPath = "ipfs://QmXVoFLmJTkFJz9qVsTRdJJpZxoL6JNMwc74NVw3mXDF52";   //uri of the picture
+  /*const mediaPath = "ipfs://QmXVoFLmJTkFJz9qVsTRdJJpZxoL6JNMwc74NVw3mXDF52";   //uri of the picture
   const metadata = {
     name: "Sleepy Cat",
     description: "NFT minted for The Saki Project",
@@ -51,7 +51,22 @@ async function main() {
     ],
   };
   const uri2 = await pinMetadataWithImageUri(mediaPath2, metadata2);
-  console.log("NFT metadata pinned at:", uri2);
+  console.log("NFT metadata pinned at:", uri2);*/
+
+  const mediaPath3 = "ipfs://QmS26ZzeGbsVmcRgjZLQvBKv89WibJkzWjmqpNahheF49d";  //uri of the picture
+  const metadata3 = {
+    name: "Angel Cat",
+    description: "NFT minted for The Saki Project",
+    attributes: [
+      {
+        trait_type: "Rarity",
+        value: "Rarest",
+      },
+    ],
+  };
+  const uri3 = await pinMetadataWithImageUri(mediaPath3, metadata3);
+  console.log("NFT metadata pinned at:", uri3);
+  
 }
 
 main();
