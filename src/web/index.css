@@ -98,7 +98,7 @@ ul {
 
 a {
   text-decoration: none;
-  color: var(--main-white);
+  color: black;
 }
 
 img {
@@ -115,7 +115,7 @@ img {
   top: 0;
   left: 0;
   width: 100%;
-  background:#C0C0C0;;
+  background:#f7b604;;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
   z-index: 10;
 }
@@ -142,7 +142,7 @@ img {
 }
 
 .nav-list a:hover {
-  background: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(116,19,133,1) 8%);;
+  background: linear-gradient(90deg, rgb(248, 63, 7) 0%, rgb(170, 37, 14) 8%);;
 }
 
 /* Welcome section */
