@@ -3,5 +3,6 @@
   "MyPurchaseModule#TheNewSakiPlace": "0x317944f299faFe35D6Bdd17295BD1F2beA3759fc",
   "MyCancelModule#TheNewSakiPlace": "0x317944f299faFe35D6Bdd17295BD1F2beA3759fc",
   "MyMintingModule#TheSakiNFTs": "0xA4997db83d3f6415B3aE99DD8586A182CF2b5F3E",
-  "MyListingModule#TheNewSakiPlace": "0x317944f299faFe35D6Bdd17295BD1F2beA3759fc"
+  "MyListingModule#TheNewSakiPlace": "0x317944f299faFe35D6Bdd17295BD1F2beA3759fc",
+  "MyNewListingModule#TheNewSakiPlace": "0x317944f299faFe35D6Bdd17295BD1F2beA3759fc"
 }
