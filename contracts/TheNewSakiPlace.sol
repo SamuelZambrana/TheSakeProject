@@ -37,7 +37,7 @@ contract TheNewSakiPlace {
     }
 
     function buyNFT(uint256 tokenId) public payable {
-        //we need to call first listNFT, so price is on the struct
+        //all the NFTs are previously listed, so price is on the struct. We need to recover "price"
         Listing memory listing = listings[tokenId];
         uint256 price = listing.price;
         require(price > 0, "NFT not listed for sale");
