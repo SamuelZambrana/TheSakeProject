@@ -25,7 +25,7 @@ async function pinMetadataWithImageUri(imageUri, metadata) {
 module.exports = { pinMetadataWithImageUri };
 
 async function main() {
-  /*const mediaPath = "ipfs://QmXVoFLmJTkFJz9qVsTRdJJpZxoL6JNMwc74NVw3mXDF52";   //uri of the picture
+  const mediaPath = "ipfs://QmXVoFLmJTkFJz9qVsTRdJJpZxoL6JNMwc74NVw3mXDF52";   //uri of the picture
   const metadata = {
     name: "Sleepy Cat",
     description: "NFT minted for The Saki Project",
@@ -65,7 +65,7 @@ async function main() {
     ],
   };
   const uri3 = await pinMetadataWithImageUri(mediaPath3, metadata3);
-  console.log("NFT metadata pinned at:", uri3);*/
+  console.log("NFT metadata pinned at:", uri3);
 
   const mediaPath4 = "ipfs://QmNwiDpSdL5jtRHgZC4zMSGrKHZ8BHhz1P1EBZYmCLgKff";  //uri of the picture
   const metadata4 = {

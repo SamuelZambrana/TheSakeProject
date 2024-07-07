@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 require("dotenv").config({ path: ".env" }); 
 const TheNewSakiPlaceArtifact = require('./artifacts/contracts/TheNewSakiPlace.sol/TheNewSakiPlace.json');
 
-document.getElementById("buyButton").addEventListener("click", async function() {
+document.getElementById("Comprar").addEventListener("click", async function() {
     const tokenId = this.getAttribute("data-token-id");
 
     if (!tokenId) {

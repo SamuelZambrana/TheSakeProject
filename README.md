@@ -30,6 +30,6 @@ Summary:
     SCRIPTS
     ///////
 ```
-    ·pinFile: 
-    ·pinMetadata:
+    ·pinFile: llamada a la funcion "pinFileToIpfs" pasandole un const con la ruta del dibujo
+    ·pinMetadata: 
     ·zparseUri:
