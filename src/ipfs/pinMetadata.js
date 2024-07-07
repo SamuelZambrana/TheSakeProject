@@ -51,7 +51,7 @@ async function main() {
     ],
   };
   const uri2 = await pinMetadataWithImageUri(mediaPath2, metadata2);
-  console.log("NFT metadata pinned at:", uri2);*/
+  console.log("NFT metadata pinned at:", uri2);
 
   const mediaPath3 = "ipfs://QmS26ZzeGbsVmcRgjZLQvBKv89WibJkzWjmqpNahheF49d";  //uri of the picture
   const metadata3 = {
@@ -65,7 +65,21 @@ async function main() {
     ],
   };
   const uri3 = await pinMetadataWithImageUri(mediaPath3, metadata3);
-  console.log("NFT metadata pinned at:", uri3);
+  console.log("NFT metadata pinned at:", uri3);*/
+
+  const mediaPath4 = "ipfs://QmNwiDpSdL5jtRHgZC4zMSGrKHZ8BHhz1P1EBZYmCLgKff";  //uri of the picture
+  const metadata4 = {
+    name: "Test Draw",
+    description: "NFT minted for The Saki Project as a Test to sell",
+    attributes: [
+      {
+        trait_type: "Rarity",
+        value: "Rarest",
+      },
+    ],
+  };
+  const uri4 = await pinMetadataWithImageUri(mediaPath4, metadata4);
+  console.log("NFT metadata pinned at:", uri4);
   
 }
 

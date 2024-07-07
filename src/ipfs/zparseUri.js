@@ -18,6 +18,9 @@ async function main() {
   const ipfsUriImage3 = "ipfs://QmS26ZzeGbsVmcRgjZLQvBKv89WibJkzWjmqpNahheF49d";
   const urlImage3 = parseIpfsUri(ipfsUriImage3);
 
+  const ipfsUriImage4 = "ipfs://QmNwiDpSdL5jtRHgZC4zMSGrKHZ8BHhz1P1EBZYmCLgKff";
+  const urlImage4 = parseIpfsUri(ipfsUriImage4);
+
 
   const ipfsUriMeta = "ipfs://QmV3kY4B8vTt9X4G1i3gLMwBhtZt6Csj878jEamZRXgwoi";
   const urlMeta = parseIpfsUri(ipfsUriMeta);
@@ -27,6 +30,12 @@ async function main() {
 
   const ipfsUriMeta3 = "ipfs://QmY2JNUZprVtkXvRVdHaRZkCEfAhMfowQcb4vuBNsMaLWx";
   const urlMeta3 = parseIpfsUri(ipfsUriMeta3);
+
+  const ipfsUriMeta4 = "ipfs://QmZkNMEhf9xVBXi7K4GfxTQ2NWK1uJZHU1qBf5tK7zdEJb";
+  const urlMeta4 = parseIpfsUri(ipfsUriMeta4);
+
+
+  console.log("----------------------")
 
   console.log("IPFS URL Sleppy Cat:", urlImage);
   console.log("IPFS URL Metadata:", urlMeta);
@@ -40,6 +49,13 @@ async function main() {
 
   console.log("IPFS URL Angle Cat", urlImage3)
   console.log("IPFS URL Metadata:", urlMeta3);
+
+  console.log("----------------------")
+
+  console.log("IPFS URL Draw Test", urlImage4)
+  console.log("IPFS URL Metadata:", urlMeta4);
+
+  console.log("----------------------")
 }
 
 main();
