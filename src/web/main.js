@@ -1,7 +1,5 @@
 import { ethers } from "ethers";
 require("dotenv").config({ path: ".env" }); 
-const TheNewSakiPlaceArtifact = require('./artifacts/contracts/TheNewSakiPlace.sol/TheNewSakiPlace.json');
-
 /*
 Conexion proovedor ethereum con metamask
 Obetener balance de cuenta conectada
@@ -60,7 +58,7 @@ const getNetwork = async () => {
 //Datos Contrato para formatear su ABI y que esten disponibles sus funcionalidades 
 let contractAddress = "0x317944f299faFe35D6Bdd17295BD1F2beA3759fc" 
 
-import ContractABI from "Ruta del abi del contrato compilado";
+import ContractABI from "./artifacts/contracts/TheNewSakiPlace.sol/TheNewSakiPlace.json";
 const ContractInterface = new ethers.utils.Interface(ContractABI.abi)
 const ContractABIFormatted = ContractInterface.format(ethers.utils.FormatTypes.full)
 
