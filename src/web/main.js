@@ -58,7 +58,7 @@ const getNetwork = async () => {
 // 3- Contract ABI (Application Binary Interface), porque necesitamos lo que puede hacer el contrato
 
 //Datos Contrato para formatear su ABI y que esten disponibles sus funcionalidades 
-let contractAddress = "0x0"
+let contractAddress = "0x317944f299faFe35D6Bdd17295BD1F2beA3759fc" 
 
 import ContractABI from "Ruta del abi del contrato compilado";
 const ContractInterface = new ethers.utils.Interface(ContractABI.abi)
