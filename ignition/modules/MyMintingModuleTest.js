@@ -2,7 +2,7 @@ const { buildModule } = require("@nomicfoundation/hardhat-ignition/modules");
 require("dotenv").config({ path: ".env" });
 const { ethers } = require("ethers");
 
-const MyMintingModule = buildModule("MyMintingModule", (m) => {
+const MyMintingModuleTest = buildModule("MyMintingModuleTest", (m) => {
     const contractAddress = process.env.NFT_CONTRACT_ADDRESS;
     const privateKey = process.env.PRIVATE_KEY;
     const wallet = new ethers.Wallet(privateKey);
@@ -10,13 +10,13 @@ const MyMintingModule = buildModule("MyMintingModule", (m) => {
 
     const MyNFT = m.contractAt("TheSakiNFTs", contractAddress);
 
-    const tokenUri = "QmY2JNUZprVtkXvRVdHaRZkCEfAhMfowQcb4vuBNsMaLWx";
+    const tokenUri = "QmZkNMEhf9xVBXi7K4GfxTQ2NWK1uJZHU1qBf5tK7zdEJb";
 
     m.call(MyNFT, "safeMint", [ourWallet, tokenUri]);
     
     return { MyNFT };
 });
 
-module.exports = MyMintingModule;
+module.exports = MyMintingModuleTest;
 
 //calling "safeMint" to generate a NFT in our wallet with another URI
