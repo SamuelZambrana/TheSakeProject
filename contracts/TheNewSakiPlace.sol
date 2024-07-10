@@ -36,19 +36,19 @@ contract TheNewSakiPlace {
         emit NFTListed(tokenId, msg.sender, _price);
     }
 
-    function buyNFT(uint256 tokenId) public payable {
+    function buyNFT(uint256 tokenId, uint256 _price) public payable {
         //all the NFTs are previously listed, so price is on the struct. We need to recover "price"
         Listing memory listing = listings[tokenId];
         uint256 price = listing.price;
         require(price > 0, "NFT not listed for sale");
-        require(msg.value == price, "Incorrect price, please introduce the exact amount");
+        require(_price == price, "Incorrect price, please introduce the exact amount");
 
         //erase from the list
         delete listings[tokenId];
 
         //swamp of nft for ethers
         theSakiNFTs.safeTransferFrom(listing.seller, msg.sender, tokenId);
-        (bool success, ) = listing.seller.call{value: msg.value}("");
+        (bool success, ) = listing.seller.call{value: _price}("");
         require(success, "Transfer failed");
 
         emit NFTPurchased(tokenId, msg.sender, listing.price);

@@ -1,23 +1,34 @@
 import { ethers } from "ethers";
 require("dotenv").config({ path: ".env" }); 
-const TheNewSakiPlaceArtifact = require('./artifacts/contracts/TheNewSakiPlace.sol/TheNewSakiPlace.json');
+//const TheNewSakiPlaceArtifact = require('./artifacts/contracts/TheNewSakiPlace.sol/TheNewSakiPlace.json');
 
-const connectMetamask = async () => {
-    // A Web3Provider wraps a standard Web3 provider, which is
-    // what MetaMask injects as window.ethereum into each page
-    provider = new ethers.providers.Web3Provider(window.ethereum)
-    // MetaMask requires requesting permission to connect users accounts
-    await provider.send("eth_requestAccounts", []);
-    // The MetaMask plugin also allows signing transactions to
-    // send ether and pay to change state within the blockchain.
-    // For this, you need the account signer...
-    signer = provider.getSigner()
-    address = await signer.getAddress()    
-    // console.log(address)
+if (typeof window.ethereum !== 'undefined') {
+    console.log('MetaMask is installed!');
+} else {
+    console.error('MetaMask is not installed.');
 }
 
+const connectMetamask = async () => {
+    if (typeof window.ethereum !== 'undefined') {
+        try {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            await provider.send("eth_requestAccounts", []);
+            const signer = provider.getSigner();
+            const address = await signer.getAddress();
+            console.log("Connected address:", address);
+            alert("MetaMask conectado con éxito: " + address);
+        } catch (error) {
+            console.error("Error connecting to MetaMask:", error);
+            alert("Error al conectar MetaMask");
+        }
+    } else {
+        console.error("MetaMask is not installed.");
+        alert("Por favor, instale MetaMask");
+    }
+};
 
-document.addEventListener("DOMContentLoaded", function() {
+
+/*document.addEventListener("DOMContentLoaded", function() {
     const buyButton = document.getElementById("Comprar");
     if (buyButton) {
         buyButton.addEventListener("click", async function() {
@@ -61,10 +72,16 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
-});
+});*/
 
-const metamaskButton = document.getElementById("metamaskButton")
-metamaskButton.addEventListener("click", async () =>{
-    console.log("Esta es tu address:")
-    await connectMetamask()
-})
+document.addEventListener("DOMContentLoaded", function() {
+    const metamaskButton = document.getElementById("metamaskButton");
+    if (metamaskButton) {
+        metamaskButton.addEventListener("click", async () => {
+            console.log("Button clicked. Connecting to MetaMask...");
+            await connectMetamask();
+        });
+    } else {
+        console.error("MetaMask button not found.");
+    }
+});
