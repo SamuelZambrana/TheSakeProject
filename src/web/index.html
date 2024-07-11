@@ -1,44 +1,38 @@
 <!DOCTYPE html>
-<html>
-<head> <!-- Encabezado pagina -->
-    <meta charset='utf-8'> <!-- Codificacion -->
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'> <!-- Compatibilidad -->
-    <title>TheSakiMarketplace</title> <!-- Titulo pagina -->
-    <meta name='viewport' content='width=device-width, initial-scale=1'> <!-- Vision Movil -->
-    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" 
-        type="application/javascript"></script> <!-- Importar libreria-->
-    <script defer type="module" src='main.js'></script> <!-- Ruta de Arranque -->
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TheSakiMarketplace</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Importar libreria ethers.js -->
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+
     <link rel="stylesheet" href="index.css" />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
-      crossorigin="anonymous"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Poppins:200i,300,400&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Raleway:700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,400&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Raleway:700&display=swap" rel="stylesheet" />
 </head>
-<body> <!-- Cuerpo pagina -->
+<body>
     <!-- START NAV -->
     <nav id="navbar" class="nav">
         <ul class="nav-list">
-          <li>
-            <a href="#welcome-section">Inicio</a>
-          </li>
-          <li>
-            <a href="#projects">Coleccion</a>
-          </li>
-          <li>
-            <a href="#contact">Crea NFTs</a>
-        </li>
+          <li><a href="#welcome-section">Inicio</a></li>
+          <li><a href="#projects">Colección</a></li>
+          <li><a href="#contact">Crea NFTs</a></li>
+          <button id="metamaskButton">Conectar Metamask</button>
+            <script defer type="module" src="main.js"></script>
+          
         </ul>
-        <button type="button" id="metamaskButton">Conectar Wallet</button> <!-- Botón -->
+    </nav>
+
+    <!-- Conectar Metamask Button -->
+    
+</body>
+</html>
+
+       
     </nav>
     <!-- END NAV -->
     <!-- START WELCOME SECTION -->
@@ -68,12 +62,13 @@
             <span class="code">&#47;&gt;</span>
           </p>
           <div>
-            <button id="Comprar" data-token-id="0">Comprar</button> <!-- Boton -->
+            <button type="button" id="Comprar" data-token-id="0" price="0.01" value="Comprar">Comprar</button> <!-- Boton -->
           </div>
           <div>
             <button type="button" id="Ver-Opensea" onclick="window.location.href='https://testnets.opensea.io/assets/sepolia/0xa4997db83d3f6415b3ae99dd8586a182cf2b5f3e/1';">
             ver en opensea
         </button> <!-- Boton -->
+        <script src="main.js"></script> 
       </div>
         </a>
         <a
@@ -92,7 +87,8 @@
             <span class="code">&#47;&gt;</span>
           </p>
           <div>
-            <input type="button" id="Comprar" value="Comprar"> <!-- Boton -->
+            <input type="button" id="Comprar" data-token-id="0" value="Comprar"> <!-- Boton -->
+            <script src="main.js"></script>
         </div>
         <div>
           <button type="button" id="Ver-Opensea" onclick="window.location.href='https://testnets.opensea.io/assets/sepolia/0xA4997db83d3f6415B3aE99DD8586A182CF2b5F3E/0';">
@@ -116,7 +112,7 @@
             <span class="code">&#47;&gt;</span>
           </p>
           <div>
-            <input type="button" id="Comprar" value="Comprar"> <!-- Boton -->
+            <input type="button" id="Comprar" data-token-id="2" value="Comprar"> <!-- Boton -->
         </div>
         <div>
           <button type="button" id="Ver-Opensea" onclick="window.location.href='https://testnets.opensea.io/assets/sepolia/0xa4997db83d3f6415b3ae99dd8586a182cf2b5f3e/2';">
