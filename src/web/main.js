@@ -1,6 +1,12 @@
-let provider;
-let signer;
-let address;
+//import ContractABI from "/artifacts/contracts/TheNewSakiPlace.sol/TheNewSakiPlace.json";
+
+/*
+Conexion proovedor ethereum con metamask
+Obetener balance de cuenta conectada
+Obtener datos de la red que nos conectamos
+*/
+
+let address, provider, signer, contractRead, contractWrite
 
 const connectMetamask = async () => {
     try {
@@ -18,8 +24,74 @@ const connectMetamask = async () => {
     }
 }
 
+const getNativeBalance = async () => {
+    console.log("\ngetNativeBalance\n");
+
+    try {
+        const balance = await provider.getBalance(address);
+        const formattedBalance = ethers.utils.formatEther(balance);
+
+        console.log(balance);
+        console.log(formattedBalance);
+    } catch (error) {
+        console.error("Error al obtener el balance nativo:", error);
+    }
+}
+
+const getNetwork = async () => {
+    console.log("\ngetNetwork\n");
+
+    try {
+        const network = await provider.getNetwork();
+
+        console.log(network);
+        console.log(network.chainId);
+        console.log(network.name);
+    } catch (error) {
+        console.error("Error al obtener la red:", error);
+    }
+}
+
+//Para crear una instancia de un contrato y poder atacarlo son necesarias tres partes
+// 1- Provider/Signer, porque necesitamos una conexion con la blockchain
+// 2- Contract Address, porque una referencia de donde atacar en la blockchain
+// 3- Contract ABI (Application Binary Interface), porque necesitamos lo que puede hacer el contrato
+
+
+//Datos Contrato para formatear su ABI y que esten disponibles sus funcionalidades 
+
+/*
+const contractAddress = process.env.SP_CONTRACT_ADDRESS;
+const ContractInterface = new ethers.utils.Interface(ContractABI.abi)
+const ContractABIFormatted = ContractInterface.format(ethers.utils.FormatTypes.full)
+/*
+
+//Iteratuamos con las funciones del contrato creando una instancia 
+/*
+const buyNFT = async () => {
+    //Creamos una nueva instancia del contrato para poder iteractuar con sus funcionalidades
+    contractRead = new ethers.Contract(contractAddress,ContractABIFormatted,provider)
+    const buy = await contractRead.buyNFT(0, 1)
+    console.log(buy)
+
+    const decimals = await contractRead.decimals()
+    const formattedBalance = ethers.utils.formatUnits(buy,decimals)
+
+    console.log(formattedBalance)
+}
+*/
+
 const metamaskButton = document.getElementById("metamaskButton");
 metamaskButton.addEventListener("click", async () => {
     console.log("Conectando a Metamask...");
     await connectMetamask();
+    await getNativeBalance();
+    await getNetwork();
 });
+
+/*const comprarButton = document.getElementById("Comprar");
+comprarButton.addEventListener("click", async () => {
+    console.log("Conectando a Metamask...");
+    await buyNFT();
+}); 
+*/
