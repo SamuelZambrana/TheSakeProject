@@ -105,7 +105,7 @@
     display: flex;
     width: auto;
   }
-  
+
   /* nav */
   
   .nav {
@@ -250,9 +250,10 @@
   }
   
   .project-image {
-    height: calc(100% - 6.8rem);
+    height:auto;
     width: 100%;
     object-fit: cover;
+    border-radius: 10px;
   }
   
   .project-title {
