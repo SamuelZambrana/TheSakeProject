@@ -144,6 +144,33 @@
   .nav-list a:hover {
     background: linear-gradient(90deg, rgb(248, 63, 7) 0%, rgb(170, 37, 14) 8%);;
   }
+
+  #metamaskButton {
+    background-color: #f6851b; /* Color de fondo Metamask */
+    color: black; /* Color de texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 20px; /* Relleno */
+    font-size: 16px; /* Tamaño de fuente */
+    font-weight: bold; /* Negrita */
+    cursor: pointer; /* Cursor de puntero */
+    transition: background-color 0.3s, transform 0.3s; /* Transiciones suaves */
+}
+
+#metamaskButton:hover {
+    background-color: #e3761b; /* Color de fondo al pasar el ratón */
+    transform: scale(1.05); /* Efecto de escalado */
+}
+
+#metamaskButton:active {
+    background-color: #cc6818; /* Color de fondo al hacer clic */
+    transform: scale(0.95); /* Efecto de reducción */
+}
+
+#metamaskButton:focus {
+    outline: none; /* Sin borde al recibir foco */
+    box-shadow: 0 0 0 3px rgba(246, 133, 27, 0.4); /* Sombra al recibir foco */
+}
   
   /* Welcome section */
   
@@ -282,6 +309,7 @@
     color: black;
     border: 2px solid #008CBA;
   }
+
   #Ver-Opensea {
     background-color: #ec5e1c; /* Green */
     color: black;
