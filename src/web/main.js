@@ -1,97 +1,223 @@
-//import ContractABI from "/artifacts/contracts/TheNewSakiPlace.sol/TheNewSakiPlace.json";
-
-/*
-Conexion proovedor ethereum con metamask
-Obetener balance de cuenta conectada
-Obtener datos de la red que nos conectamos
-*/
-
-let address, provider, signer, contractRead, contractWrite
+let provider;
+let signer;
+let address;
 
 const connectMetamask = async () => {
     try {
-        // A Web3Provider wraps a standard Web3 provider, which is what MetaMask injects as window.ethereum into each page
+        console.log("Iniciando conexión a MetaMask...");
         provider = new ethers.providers.Web3Provider(window.ethereum);
-        // MetaMask requires requesting permission to connect users accounts
-        await provider.send("eth_requestAccounts", []);
-        // The MetaMask plugin also allows signing transactions to send ether and pay to change state within the blockchain.
-        // For this, you need the account signer...
+
+        if (!window.ethereum) {
+            alert("MetaMask no está instalado. Por favor, instálalo para usar esta aplicación.");
+            return;
+        }
+
+        const accounts = await provider.send("eth_requestAccounts", []);
+        console.log("Cuentas conectadas:", accounts);
+
+        await provider.send("wallet_requestPermissions", [{
+            eth_accounts: {}
+        }]);
+
         signer = provider.getSigner();
-        address = await signer.getAddress();    
+        address = await signer.getAddress();
         console.log("Conectado con la dirección:", address);
     } catch (error) {
-        console.error("Error al conectar con Metamask:", error);
+        console.error("Error al conectar con MetaMask:", error);
     }
 }
 
-const getNativeBalance = async () => {
-    console.log("\ngetNativeBalance\n");
-
+const buyNFT = async (tokenId, price) => {
     try {
-        const balance = await provider.getBalance(address);
-        const formattedBalance = ethers.utils.formatEther(balance);
-
-        console.log(balance);
-        console.log(formattedBalance);
+        const CONTRACT_ABI = [
+            {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "nftAddress",
+                    "type": "address"
+                  }
+                ],
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+              },
+              {
+                "anonymous": false,
+                "inputs": [
+                  {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "ListingCanceled",
+                "type": "event"
+              },
+              {
+                "anonymous": false,
+                "inputs": [
+                  {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  },
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "seller",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "price",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "NFTListed",
+                "type": "event"
+              },
+              {
+                "anonymous": false,
+                "inputs": [
+                  {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  },
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "buyer",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "price",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "NFTPurchased",
+                "type": "event"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "_price",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "buyNFT",
+                "outputs": [],
+                "stateMutability": "payable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "cancelListing",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "_price",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "listNFT",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "listings",
+                "outputs": [
+                  {
+                    "internalType": "address",
+                    "name": "seller",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "price",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "theSakiNFTs",
+                "outputs": [
+                  {
+                    "internalType": "contract ITheSakiNFTs",
+                    "name": "",
+                    "type": "address"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              }
+        ];
+        const SP_CONTRACT_ADDRESS = "0xdb980d6ce6a25322d6DE84b3e26BA3a8b672e73D";
+        const ContractInterface = new ethers.utils.Interface(CONTRACT_ABI.abi)
+        const ContractABIFormatted = ContractInterface.format(ethers.utils.FormatTypes.full)
+        
+        const contract = new ethers.Contract(SP_CONTRACT_ADDRESS, ContractABIFormatted, signer);
+        const tx = await contract.buyNFT(tokenId, price);
+        console.log("Transacción enviada:", tx);
+        await tx.wait();
+        console.log("Transacción confirmada:", tx);
     } catch (error) {
-        console.error("Error al obtener el balance nativo:", error);
+        console.error("Error al comprar NFT:", error);
     }
 }
 
-const getNetwork = async () => {
-    console.log("\ngetNetwork\n");
+document.addEventListener("DOMContentLoaded", () => {
+    const metamaskButton = document.getElementById("metamaskButton");
+    metamaskButton.addEventListener("click", async () => {
+        console.log("Conectando a MetaMask...");
+        await connectMetamask();
+    });
 
-    try {
-        const network = await provider.getNetwork();
-
-        console.log(network);
-        console.log(network.chainId);
-        console.log(network.name);
-    } catch (error) {
-        console.error("Error al obtener la red:", error);
-    }
-}
-
-//Para crear una instancia de un contrato y poder atacarlo son necesarias tres partes
-// 1- Provider/Signer, porque necesitamos una conexion con la blockchain
-// 2- Contract Address, porque una referencia de donde atacar en la blockchain
-// 3- Contract ABI (Application Binary Interface), porque necesitamos lo que puede hacer el contrato
-
-
-//Datos Contrato para formatear su ABI y que esten disponibles sus funcionalidades 
-
-/*
-const contractAddress = process.env.SP_CONTRACT_ADDRESS;
-const ContractInterface = new ethers.utils.Interface(ContractABI.abi)
-const ContractABIFormatted = ContractInterface.format(ethers.utils.FormatTypes.full)
-/*
-
-//Iteratuamos con las funciones del contrato creando una instancia 
-/*
-const buyNFT = async () => {
-    //Creamos una nueva instancia del contrato para poder iteractuar con sus funcionalidades
-    contractRead = new ethers.Contract(contractAddress,ContractABIFormatted,provider)
-    const buy = await contractRead.buyNFT(0, 1)
-    console.log(buy)
-
-    const decimals = await contractRead.decimals()
-    const formattedBalance = ethers.utils.formatUnits(buy,decimals)
-
-    console.log(formattedBalance)
-}
-*/
-
-const metamaskButton = document.getElementById("metamaskButton");
-metamaskButton.addEventListener("click", async () => {
-    console.log("Conectando a Metamask...");
-    await connectMetamask();
-    await getNativeBalance();
-    await getNetwork();
+    const comprarButton = document.getElementById("Comprar");
+    comprarButton.addEventListener("click", async () => {
+        const tokenId = comprarButton.getAttribute("data-token-id");
+        const price = ethers.utils.parseEther(comprarButton.getAttribute("data-token-price"));
+        console.log("Comprando NFT con ID:", tokenId, "y precio:", price.toString());
+        await buyNFT(tokenId, price);
+    });
 });
 
-/*const comprarButton = document.getElementById("Comprar");
-comprarButton.addEventListener("click", async () => {
-    console.log("Conectando a Metamask...");
-    await buyNFT();
-}); 
-*/
