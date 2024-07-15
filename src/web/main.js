@@ -4,30 +4,217 @@ let address;
 
 const connectMetamask = async () => {
     try {
-        // A Web3Provider wraps a standard Web3 provider, which is what MetaMask injects as window.ethereum into each page
+        console.log("Iniciando conexión a MetaMask...");
         provider = new ethers.providers.Web3Provider(window.ethereum);
-        
-        // MetaMask requires requesting permission to connect users accounts
-        await provider.send("eth_requestAccounts", []);
-        
-        // This will open the MetaMask account switcher
+
+        if (!window.ethereum) {
+            alert("MetaMask no está instalado. Por favor, instálalo para usar esta aplicación.");
+            return;
+        }
+
+        const accounts = await provider.send("eth_requestAccounts", []);
+        console.log("Cuentas conectadas:", accounts);
+
         await provider.send("wallet_requestPermissions", [{
             eth_accounts: {}
         }]);
-        
-        // The MetaMask plugin also allows signing transactions to send ether and pay to change state within the blockchain.
-        // For this, you need the account signer...
+
         signer = provider.getSigner();
-        address = await signer.getAddress();    
+        address = await signer.getAddress();
         console.log("Conectado con la dirección:", address);
     } catch (error) {
-        console.error("Error al conectar con Metamask:", error);
+        console.error("Error al conectar con MetaMask:", error);
     }
 }
 
-const metamaskButton = document.getElementById("metamaskButton");
-metamaskButton.addEventListener("click", async () => {
-    console.log("Conectando a Metamask...");
-    await connectMetamask();
+const buyNFT = async (tokenId, price) => {
+    try {
+        const CONTRACT_ABI = [
+            {
+                "inputs": [
+                  {
+                    "internalType": "address",
+                    "name": "nftAddress",
+                    "type": "address"
+                  }
+                ],
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+              },
+              {
+                "anonymous": false,
+                "inputs": [
+                  {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "ListingCanceled",
+                "type": "event"
+              },
+              {
+                "anonymous": false,
+                "inputs": [
+                  {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  },
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "seller",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "price",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "NFTListed",
+                "type": "event"
+              },
+              {
+                "anonymous": false,
+                "inputs": [
+                  {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  },
+                  {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "buyer",
+                    "type": "address"
+                  },
+                  {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "price",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "NFTPurchased",
+                "type": "event"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "_price",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "buyNFT",
+                "outputs": [],
+                "stateMutability": "payable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "cancelListing",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "_price",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "listNFT",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+              },
+              {
+                "inputs": [
+                  {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                  }
+                ],
+                "name": "listings",
+                "outputs": [
+                  {
+                    "internalType": "address",
+                    "name": "seller",
+                    "type": "address"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "price",
+                    "type": "uint256"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              },
+              {
+                "inputs": [],
+                "name": "theSakiNFTs",
+                "outputs": [
+                  {
+                    "internalType": "contract ITheSakiNFTs",
+                    "name": "",
+                    "type": "address"
+                  }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+              }
+        ];
+        const SP_CONTRACT_ADDRESS = "0xdb980d6ce6a25322d6DE84b3e26BA3a8b672e73D";
+        const contract = new ethers.Contract(SP_CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+        const tx = await contract.buyNFT(tokenId, price, { value: price });
+        console.log("Transacción enviada:", tx);
+        await tx.wait();
+        console.log("Transacción confirmada:", tx);
+    } catch (error) {
+        console.error("Error al comprar NFT:", error);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const metamaskButton = document.getElementById("metamaskButton");
+    metamaskButton.addEventListener("click", async () => {
+        console.log("Conectando a MetaMask...");
+        await connectMetamask();
+    });
+
+    const comprarButton = document.getElementById("Comprar");
+    comprarButton.addEventListener("click", async () => {
+        const tokenId = comprarButton.getAttribute("data-token-id");
+        const price = ethers.utils.parseEther(comprarButton.getAttribute("data-token-price"));
+        console.log("Comprando NFT con ID:", tokenId, "y precio:", price.toString());
+        await buyNFT(tokenId, price);
+    });
 });
 
