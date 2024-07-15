@@ -192,13 +192,13 @@ const buyNFT = async (tokenId, price) => {
               }
         ];
         const SP_CONTRACT_ADDRESS = "0xdb980d6ce6a25322d6DE84b3e26BA3a8b672e73D";
+        const priceInEther = ethers.utils.parseUnits(price.toString(), "wei");
         const contract = new ethers.Contract(SP_CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-        const tx = await contract.buyNFT(tokenId, price, { value: price });
-        console.log("Transacción enviada:", tx);
+        const tx = await contract.buyNFT(tokenId, { value: priceInEther });
         await tx.wait();
-        console.log("Transacción confirmada:", tx);
+        console.log("Transacción completada:", tx);
     } catch (error) {
-        console.error("Error al comprar NFT:", error);
+        console.error("Error al comprar el NFT:", error);
     }
 }
 
