@@ -27,178 +27,182 @@ const connectMetamask = async () => {
     }
 }
 
-const buyNFT = async (tokenId, price) => {
+const CONTRACT_ABI = [
+    {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "nftAddress",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          }
+        ],
+        "name": "ListingCanceled",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "seller",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          }
+        ],
+        "name": "NFTListed",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "buyer",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          }
+        ],
+        "name": "NFTPurchased",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "_price",
+            "type": "uint256"
+          }
+        ],
+        "name": "buyNFT",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          }
+        ],
+        "name": "cancelListing",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "_price",
+            "type": "uint256"
+          }
+        ],
+        "name": "listNFT",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "listings",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "seller",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "theSakiNFTs",
+        "outputs": [
+          {
+            "internalType": "contract ITheSakiNFTs",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+];
+
+const SP_CONTRACT_ADDRESS = "0xdb980d6ce6a25322d6DE84b3e26BA3a8b672e73D";
+
+const buyNFT = async () => {
     try {
-        const CONTRACT_ABI = [
-            {
-                "inputs": [
-                  {
-                    "internalType": "address",
-                    "name": "nftAddress",
-                    "type": "address"
-                  }
-                ],
-                "stateMutability": "nonpayable",
-                "type": "constructor"
-              },
-              {
-                "anonymous": false,
-                "inputs": [
-                  {
-                    "indexed": true,
-                    "internalType": "uint256",
-                    "name": "tokenId",
-                    "type": "uint256"
-                  }
-                ],
-                "name": "ListingCanceled",
-                "type": "event"
-              },
-              {
-                "anonymous": false,
-                "inputs": [
-                  {
-                    "indexed": true,
-                    "internalType": "uint256",
-                    "name": "tokenId",
-                    "type": "uint256"
-                  },
-                  {
-                    "indexed": true,
-                    "internalType": "address",
-                    "name": "seller",
-                    "type": "address"
-                  },
-                  {
-                    "indexed": false,
-                    "internalType": "uint256",
-                    "name": "price",
-                    "type": "uint256"
-                  }
-                ],
-                "name": "NFTListed",
-                "type": "event"
-              },
-              {
-                "anonymous": false,
-                "inputs": [
-                  {
-                    "indexed": true,
-                    "internalType": "uint256",
-                    "name": "tokenId",
-                    "type": "uint256"
-                  },
-                  {
-                    "indexed": true,
-                    "internalType": "address",
-                    "name": "buyer",
-                    "type": "address"
-                  },
-                  {
-                    "indexed": false,
-                    "internalType": "uint256",
-                    "name": "price",
-                    "type": "uint256"
-                  }
-                ],
-                "name": "NFTPurchased",
-                "type": "event"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "uint256",
-                    "name": "tokenId",
-                    "type": "uint256"
-                  },
-                  {
-                    "internalType": "uint256",
-                    "name": "_price",
-                    "type": "uint256"
-                  }
-                ],
-                "name": "buyNFT",
-                "outputs": [],
-                "stateMutability": "payable",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "uint256",
-                    "name": "tokenId",
-                    "type": "uint256"
-                  }
-                ],
-                "name": "cancelListing",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "uint256",
-                    "name": "tokenId",
-                    "type": "uint256"
-                  },
-                  {
-                    "internalType": "uint256",
-                    "name": "_price",
-                    "type": "uint256"
-                  }
-                ],
-                "name": "listNFT",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-              },
-              {
-                "inputs": [
-                  {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                  }
-                ],
-                "name": "listings",
-                "outputs": [
-                  {
-                    "internalType": "address",
-                    "name": "seller",
-                    "type": "address"
-                  },
-                  {
-                    "internalType": "uint256",
-                    "name": "price",
-                    "type": "uint256"
-                  }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-              },
-              {
-                "inputs": [],
-                "name": "theSakiNFTs",
-                "outputs": [
-                  {
-                    "internalType": "contract ITheSakiNFTs",
-                    "name": "",
-                    "type": "address"
-                  }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-              }
-        ];
-        const SP_CONTRACT_ADDRESS = "0xdb980d6ce6a25322d6DE84b3e26BA3a8b672e73D";
-        const priceInEther = ethers.utils.parseUnits(price.toString(), "wei");
         const contract = new ethers.Contract(SP_CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-        const tx = await contract.buyNFT(tokenId, { value: priceInEther });
+        console.log(signer)
+        const tx = await contract.buyNFT(1, 10000000000000, {
+            gasLimit: ethers.utils.parseUnits('1000000', 'wei')}) // Ajusta según sea necesario);
+        console.log("Transacción enviada:", tx);
         await tx.wait();
-        console.log("Transacción completada:", tx);
+        console.log("Transacción confirmada:", tx);
     } catch (error) {
-        console.error("Error al comprar el NFT:", error);
+        console.error("Error al comprar NFT:", error);
     }
 }
 
@@ -209,12 +213,13 @@ document.addEventListener("DOMContentLoaded", () => {
         await connectMetamask();
     });
 
-    const comprarButton = document.getElementById("Comprar");
-    comprarButton.addEventListener("click", async () => {
-        const tokenId = comprarButton.getAttribute("data-token-id");
-        const price = ethers.utils.parseEther(comprarButton.getAttribute("data-token-price"));
+    const Comprar = document.getElementById("Comprar");
+    Comprar.addEventListener("click", async () => {
+        const tokenId = Comprar.getAttribute("data-token-id");
+        const price = ethers.utils.parseEther(Comprar.getAttribute("data-token-price"));
         console.log("Comprando NFT con ID:", tokenId, "y precio:", price.toString());
         await buyNFT(tokenId, price);
     });
 });
+
 
