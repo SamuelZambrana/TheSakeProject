@@ -3,12 +3,12 @@ THE SAKI PROJECT
 ////////////////
 
 Summary:
-- Pequeño Marketplace respaldado en un bonito frontal donde listamos una coleccion de NFT de dibujos de gatos hechos a mano, listos para vender (testnet).
+- Pequeño Marketplace respaldado en un bonito frontal donde listamos una coleccion de NFT de dibujos de gatos hechos a mano, listos para vender (testnet). El proyecto pretende en un futuro poder recibir dibujos de pequeños artistas y realizar el pingueo a IPFS, convertir-los en NFTs y listarlos para vender...
 
 
 1) PRIMEROS PASOS...
 
-- Instalar e inicializar un proyecto de HardHat, usando node (npm install --save-dev hardhat // npx hardhat init) e instalar varias de las depencias que necesitaremos (openzeppelin, pinata, ethers, dotenv...)
+- Instalar e inicializar un proyecto de HardHat, usando node (npm install --save-dev hardhat // npx hardhat init) e instalar varias de las depencias que necesitaremos (openzeppelin, pinata, ethers, dotenv, etc.)
 
 - Trastear e investigar que es esta nueva funcionalidad de "ignition". Más adelante veremos que es clave para desplegar los contratos e interactuar con ellos.
 
@@ -65,7 +65,13 @@ Summary:
 
 3) FRONTEND
 
-- Creación del archivo "index.html" i su "index.css" para la creación del frontal y los botones que realizarán la conexión con el backed.
+- Creación de un pequeño frontal utilizando html y css como estilo ("index.html/index.css"), y javascript para poder conectar algunos de los botones del frontal con el backend mediante el script "main.js". (src/web)
 
-- Creación del archivo "main.js", el cual nos permitirá conectarnos a MEtamask y hacer la llamada al contrato que está desplegado en Sepolia.
+    · Sección Inicio: Encontramos 4 botones: "Inicio" que te llevan al principio de la web, "Colección" te lleva a la colección de los NFTs, "Crea NFTs" te lleva a las redes sociales de Miki y Samu y "Conectar Metamask" te permite loggearte con tu wallet.
+
+    · Sección Colección: Encontramos los 3 dibujos listados y ready para comprar. Veremos el nombre del dibujo, un botón de comprar que llama a al funció de "buyNFT" de nuestro contrato para realizar la compra, y un botón de ver en OpenSea para poder ver toda la información del NFT como el "id", la address del creador, etc.
+
+    · Sección Final: Encontramos información de los developers, 4 botones para acceder al GitHub i Linkedin de Samu y Miki respectivamente
+
+- Creación del archivo "main.js", el cual nos permitirá conectarnos a Metamask y hacer la llamada al contrato que está desplegado en Sepolia. En este script encontraremos la lógica para conectarnos a Metamask ("connectMetamask"), la importación de la ABI y la address del Smart Contract de TheNewSakiPlace (contrato con el que interactuaremos con el botón "Comprar" des de el frontal). Desde la constante "buyNFT" accederemos al contrato ya desplegado e interactuaremos con la función que permite la compra de los NFTs, recibiendo por parametros el "id" y el "price". Mediante "document.getElementById", conectaremos nuestro botón del front a la lógica del backend.
 
