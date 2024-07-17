@@ -197,7 +197,7 @@ const buyNFT = async () => {
         const contract = new ethers.Contract(SP_CONTRACT_ADDRESS, CONTRACT_ABI, signer);
         console.log(signer)
         const tx = await contract.buyNFT(1, 10000000000000, {
-            gasLimit: ethers.utils.parseUnits('1000000', 'wei')}) // Ajusta según sea necesario);
+            gasLimit: ethers.utils.parseUnits('10000000000000', 'wei')}) // Ajusta según sea necesario);
         console.log("Transacción enviada:", tx);
         await tx.wait();
         console.log("Transacción confirmada:", tx);
