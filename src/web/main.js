@@ -1,3 +1,5 @@
+//import { BigNumber } from 'ethers';
+
 let provider;
 let signer;
 let address;
@@ -192,12 +194,28 @@ const CONTRACT_ABI = [
 
 const SP_CONTRACT_ADDRESS = "0xdb980d6ce6a25322d6DE84b3e26BA3a8b672e73D";
 
+const listNFT = async () => {
+  try {
+    const contract = new ethers.Contract(SP_CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+    console.log(signer)
+    const price = ethers.utils.parseEther('000000000001')
+    const list = contract.listNFT(1, price)
+    console.log("Listamiento NFT enviado:", list);
+    await list.wait();
+    console.log("Listamiento NFT confirmado:", list);
+  } catch (error) {
+    console.error("Error al listar NFT:", error);
+  }
+}
+
+
 const buyNFT = async () => {
     try {
         const contract = new ethers.Contract(SP_CONTRACT_ADDRESS, CONTRACT_ABI, signer);
         console.log(signer)
-        const tx = await contract.buyNFT(1, 10000000000000, {
-            gasLimit: ethers.utils.parseUnits('1000000', 'wei')}) // Ajusta según sea necesario);
+        const price = ethers.utils.parseEther('000000000001')
+        const tx = await contract.buyNFT(1, price, {
+            gasLimit: ethers.utils.parseEther('0.000000000001')}) // Ajusta según sea necesario);
         console.log("Transacción enviada:", tx);
         await tx.wait();
         console.log("Transacción confirmada:", tx);
@@ -218,6 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const tokenId = Comprar.getAttribute("data-token-id");
         const price = ethers.utils.parseEther(Comprar.getAttribute("data-token-price"));
         console.log("Comprando NFT con ID:", tokenId, "y precio:", price.toString());
+        await listNFT(tokenId, price);
         await buyNFT(tokenId, price);
     });
 });
