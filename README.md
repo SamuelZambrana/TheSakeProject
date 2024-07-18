@@ -2,6 +2,11 @@
 THE SAKI PROJECT
 ////////////////
 
+![image](https://github.com/user-attachments/assets/34be8ffa-d951-4926-ba19-9122f987334c)
+![image](https://github.com/user-attachments/assets/8ccae356-455e-4a8a-b7b5-e0241149a096)
+![image](https://github.com/user-attachments/assets/bd05431f-963e-41ca-aef2-cf3058c78728)
+
+
 Summary:
 - Pequeño Marketplace respaldado en un bonito frontal donde listamos una coleccion de NFT de dibujos de gatos hechos a mano, listos para vender (testnet). El proyecto pretende en un futuro poder recibir dibujos de pequeños artistas y realizar el pingueo a IPFS, convertir-los en NFTs y listarlos para vender...
 
